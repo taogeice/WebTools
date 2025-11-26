@@ -3,7 +3,8 @@
 """
 import os
 from typing import List
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
+from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -34,9 +35,23 @@ class Settings(BaseSettings):
     # JWT 配置
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 天
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = {
+        "env_file": ".env",
+        "case_sensitive": True
+    }
+
+    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
+    @classmethod
+    def assemble_cors_origins(cls, v: str | List[str]) -> List[str]:
+        if isinstance(v, str):
+            # 解析逗号分隔的字符串
+            if "," in v:
+                return [i.strip() for i in v.split(",")]
+            return [i.strip() for i in v.split(",")]
+        elif isinstance(v, list):
+            return v
+        else:
+            raise ValueError("CORS origins must be a string or list")
 
 
 # 创建设置实例

@@ -5,9 +5,6 @@
 echo "激活 Conda 环境: fastWeb"
 conda activate fastWeb
 
-# 安装/更新依赖
-echo "安装依赖..."
-pip install -r requirements.txt
 
 # 运行应用
 echo "启动 FastAPI 开发服务器..."

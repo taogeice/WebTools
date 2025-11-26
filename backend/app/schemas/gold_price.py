@@ -36,8 +36,7 @@ class GoldPrice(GoldPriceBase):
     date: datetime
     created_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 
 class GoldPriceResponse(BaseModel):

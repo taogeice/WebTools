@@ -3,7 +3,7 @@
 """
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional, List
+from typing import Optional, List, Dict
 from datetime import datetime, timedelta
 
 from app.api.dependencies.deps import get_db

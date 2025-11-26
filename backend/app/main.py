@@ -7,6 +7,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.db.database import engine, Base
 
+# 导入所有模型，以确保它们被注册到 Base.metadata
+from app.models import gold_price  # noqa
+from app.models import user  # noqa
+
 # 创建所有数据库表
 Base.metadata.create_all(bind=engine)
 
@@ -46,3 +50,8 @@ async def health_check():
 @app.get("/")
 async def root():
     return {"message": "欢迎使用 WebTools API"}
+
+# 调试端点 - 显示 CORS 配置
+@app.get("/debug/cors")
+async def debug_cors():
+    return {"cors_origins": settings.BACKEND_CORS_ORIGINS}
