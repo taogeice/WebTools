@@ -50,8 +50,3 @@ async def health_check():
 @app.get("/")
 async def root():
     return {"message": "欢迎使用 WebTools API"}
-
-# 调试端点 - 显示 CORS 配置
-@app.get("/debug/cors")
-async def debug_cors():
-    return {"cors_origins": settings.BACKEND_CORS_ORIGINS}
