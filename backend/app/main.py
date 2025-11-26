@@ -5,6 +5,10 @@ FastAPI 主应用入口
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
+from app.db.database import engine, Base
+
+# 创建所有数据库表
+Base.metadata.create_all(bind=engine)
 
 # 应用实例
 app = FastAPI(
@@ -25,9 +29,13 @@ app.add_middleware(
 
 # API 路由注册
 from app.api.router.user import router as user_router
+from app.api.router.gold_price import router as gold_price_router
 
 # 注册用户路由
 app.include_router(user_router, prefix=settings.API_V1_STR + "/users", tags=["users"])
+
+# 注册黄金价格路由
+app.include_router(gold_price_router, prefix=settings.API_V1_STR + "/gold", tags=["gold"])
 
 # 健康检查端点
 @app.get("/health")
