@@ -151,45 +151,54 @@ export default {
 
 <style scoped>
 .dev-tools-container {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .tools-title {
   text-align: center;
-  font-size: 36px;
-  color: white;
-  margin-bottom: 10px;
+  font-size: 38px;
+  color: #00f2ff;
+  margin-bottom: 15px;
   font-weight: 700;
+  text-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
 }
 
 .tools-subtitle {
   text-align: center;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #8899aa;
   margin-bottom: 40px;
 }
 
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 25px;
   margin-bottom: 30px;
 }
 
 .tool-card {
-  background: white;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 242, 255, 0.1);
   border-radius: 12px;
   padding: 30px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .tool-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  border-color: #00f2ff;
+  box-shadow: 0 8px 30px rgba(0, 242, 255, 0.3);
 }
 
 .tool-icon {
@@ -199,14 +208,14 @@ export default {
 }
 
 .tool-card h3 {
-  font-size: 20px;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 22px;
+  color: #00f2ff;
+  margin-bottom: 12px;
   font-weight: 600;
 }
 
 .tool-card p {
-  color: #666;
+  color: #8899aa;
   font-size: 14px;
   margin-bottom: 20px;
   line-height: 1.6;
@@ -215,18 +224,19 @@ export default {
 .tool-btn {
   width: 100%;
   padding: 12px 24px;
-  background: #4dabf7;
-  color: white;
-  border: none;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  color: #00f2ff;
+  border: 1px solid #00f2ff;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .tool-btn:hover {
-  background: #339af0;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.3) 0%, rgba(0, 132, 255, 0.3) 100%);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
   transform: translateY(-2px);
 }
 
@@ -236,45 +246,49 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 20px;
+  backdrop-filter: blur(5px);
 }
 
 .tool-panel {
-  background: white;
-  border-radius: 12px;
+  background: rgba(10, 14, 39, 0.95);
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  border-radius: 16px;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
 }
 
 .panel-header {
   padding: 25px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  color: #00f2ff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(0, 242, 255, 0.2);
 }
 
 .panel-header h3 {
   margin: 0;
   font-size: 24px;
   font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 .close-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
+  background: rgba(0, 242, 255, 0.1);
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  color: #00f2ff;
   font-size: 32px;
   width: 40px;
   height: 40px;
@@ -287,7 +301,8 @@ export default {
 }
 
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 242, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
   transform: rotate(90deg);
 }
 
@@ -295,6 +310,7 @@ export default {
   padding: 30px;
   overflow-y: auto;
   flex: 1;
+  color: #ccc;
 }
 
 @media (max-width: 768px) {

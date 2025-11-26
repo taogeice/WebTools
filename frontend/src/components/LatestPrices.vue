@@ -154,29 +154,35 @@ export default {
 
 <style scoped>
 .latest-prices {
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
-  margin: 0 0 20px 0;
-  font-size: 24px;
-  color: #333;
+  margin: 0 0 30px 0;
+  font-size: 32px;
+  color: #00f2ff;
+  font-weight: 700;
   text-align: center;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 h3 {
   margin: 0;
-  font-size: 18px;
-  color: #333;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 600;
 }
 
 h4 {
-  margin: 0 0 10px 0;
-  font-size: 16px;
-  color: #666;
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #00f2ff;
+  font-weight: 600;
 }
 
 .refresh-section {
@@ -185,30 +191,34 @@ h4 {
 }
 
 .refresh-btn {
-  padding: 10px 30px;
-  background: #4dabf7;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 12px 35px;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  color: #00f2ff;
+  border: 1px solid #00f2ff;
+  border-radius: 8px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s;
 }
 
 .refresh-btn:hover:not(:disabled) {
-  background: #339af0;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.3) 0%, rgba(0, 132, 255, 0.3) 100%);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .refresh-btn:disabled {
-  background: #ccc;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .loading,
 .error {
   text-align: center;
-  padding: 40px;
-  font-size: 16px;
+  padding: 60px 40px;
+  font-size: 18px;
+  color: #8899aa;
 }
 
 .error {
@@ -223,95 +233,138 @@ h4 {
 }
 
 .price-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   text-align: center;
   color: white;
-  transition: transform 0.3s;
+  transition: all 0.3s;
+  border: 2px solid transparent;
 }
 
 .price-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
 }
 
 .price-card.domestic {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(238, 90, 111, 0.2) 100%);
+  border-color: rgba(255, 107, 107, 0.3);
 }
 
 .price-card.international {
-  background: linear-gradient(135deg, #4dabf7 0%, #339af0 100%);
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  border-color: rgba(0, 242, 255, 0.3);
+}
+
+.price-card.domestic:hover {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.4);
+}
+
+.price-card.international:hover {
+  border-color: #00f2ff;
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .badge {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
 }
 
 .price-value {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: bold;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'SF Mono', monospace;
 }
 
 .price-unit {
   font-size: 16px;
   opacity: 0.9;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
+  font-weight: 500;
 }
 
 .price-date {
   font-size: 14px;
-  opacity: 0.8;
+  opacity: 0.75;
+  font-style: italic;
 }
 
 .comparison-section {
-  background: #f8f9fa;
-  padding: 25px;
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border-radius: 12px;
   margin-bottom: 30px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.comparison-section h3 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .comparison-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 15px;
+  gap: 25px;
+  margin-top: 20px;
 }
 
 .stat-item {
   text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.stat-item:hover {
+  border-color: #00f2ff;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 .stat-item .label {
   display: block;
   font-size: 14px;
-  color: #666;
-  margin-bottom: 8px;
+  color: #8899aa;
+  margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .stat-item .value {
   display: block;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
-  color: #4dabf7;
+  color: #00f2ff;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+  font-family: 'SF Mono', monospace;
 }
 
 .metadata {
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.metadata h4 {
+  margin-bottom: 15px;
 }
 
 .metadata ul {
@@ -320,15 +373,22 @@ h4 {
 }
 
 .metadata li {
-  padding: 8px 0;
-  color: #666;
+  padding: 10px 0;
+  color: #8899aa;
   font-size: 14px;
+  transition: all 0.3s;
+}
+
+.metadata li:hover {
+  color: #00f2ff;
+  padding-left: 10px;
 }
 
 .metadata li:before {
-  content: "• ";
-  color: #4dabf7;
+  content: "▹ ";
+  color: #00f2ff;
   font-weight: bold;
+  margin-right: 8px;
 }
 
 @media (max-width: 768px) {
@@ -337,11 +397,16 @@ h4 {
   }
 
   .price-value {
-    font-size: 36px;
+    font-size: 40px;
   }
 
   .comparison-stats {
     grid-template-columns: 1fr;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 </style>

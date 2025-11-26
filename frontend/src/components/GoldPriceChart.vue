@@ -286,104 +286,135 @@ export default {
 
 <style scoped>
 .gold-price-chart {
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .chart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .chart-header h2 {
   margin: 0;
-  font-size: 24px;
-  color: #333;
+  font-size: 28px;
+  color: #00f2ff;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 .market-toggle {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .market-btn {
-  padding: 8px 16px;
-  border: 2px solid #ddd;
-  background: white;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  background: rgba(0, 242, 255, 0.05);
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s;
+  font-size: 15px;
+  font-weight: 600;
+  color: #8899aa;
+  transition: all 0.3s ease;
 }
 
 .market-btn:hover {
-  border-color: #4dabf7;
+  border-color: #00f2ff;
+  background: rgba(0, 242, 255, 0.1);
+  color: #00f2ff;
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
 }
 
 .market-btn.active {
-  background: #4dabf7;
-  color: white;
-  border-color: #4dabf7;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  border-color: #00f2ff;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
 }
 
 .chart-controls {
   display: flex;
   gap: 20px;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
 }
 
 .date-range,
 .chart-type {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
 .date-range label,
 .chart-type label {
   font-size: 14px;
-  color: #666;
+  color: #8899aa;
+  font-weight: 500;
 }
 
 .date-range input,
 .chart-type select {
-  padding: 6px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 6px;
   font-size: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.date-range input:focus,
+.chart-type select:focus {
+  border-color: #00f2ff;
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
 }
 
 .sync-btn {
-  padding: 8px 20px;
-  background: #51cf66;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  color: #00f2ff;
+  border: 1px solid #00f2ff;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .sync-btn:hover:not(:disabled) {
-  background: #40c057;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.3) 0%, rgba(0, 132, 255, 0.3) 100%);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .sync-btn:disabled {
-  background: #ccc;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .loading,
 .error {
   text-align: center;
-  padding: 40px;
-  font-size: 16px;
+  padding: 60px 40px;
+  font-size: 18px;
+  color: #8899aa;
 }
 
 .error {
@@ -392,46 +423,84 @@ export default {
 
 .chart-container {
   width: 100%;
-  height: 400px;
-  margin: 20px 0;
+  height: 500px;
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-container canvas {
+  max-width: 100%;
+  height: auto !important;
 }
 
 .chart-summary {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 6px;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-top: 30px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
 }
 
 .summary-item {
   text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.summary-item:hover {
+  border-color: #00f2ff;
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 .summary-item .label {
   display: block;
   font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
+  color: #8899aa;
+  margin-bottom: 8px;
+  font-weight: 500;
 }
 
 .summary-item .value {
   display: block;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: #00f2ff;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 @media (max-width: 768px) {
+  .chart-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
   .chart-controls {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .chart-summary {
+  .date-range,
+  .chart-type {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chart-summary {
+    grid-template-columns: 1fr;
     gap: 15px;
   }
 }

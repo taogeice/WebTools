@@ -351,75 +351,99 @@ export default {
 
 <style scoped>
 .gold-price-comparison {
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
-  margin: 0 0 20px 0;
-  font-size: 24px;
-  color: #333;
+  margin: 0 0 30px 0;
+  font-size: 32px;
+  color: #00f2ff;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 h3 {
-  margin: 0 0 15px 0;
-  font-size: 18px;
-  color: #666;
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: #00f2ff;
+  font-weight: 600;
 }
 
 .comparison-controls {
   display: flex;
   gap: 20px;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
 }
 
 .date-range {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
 }
 
 .date-range label {
   font-size: 14px;
-  color: #666;
+  color: #8899aa;
+  font-weight: 500;
 }
 
 .date-range input {
-  padding: 6px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 6px;
   font-size: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.date-range input:focus {
+  border-color: #00f2ff;
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
 }
 
 .sync-btn {
-  padding: 8px 20px;
-  background: #51cf66;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.2) 0%, rgba(0, 132, 255, 0.2) 100%);
+  color: #00f2ff;
+  border: 1px solid #00f2ff;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .sync-btn:hover:not(:disabled) {
-  background: #40c057;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.3) 0%, rgba(0, 132, 255, 0.3) 100%);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .sync-btn:disabled {
-  background: #ccc;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .loading,
 .error {
   text-align: center;
-  padding: 40px;
-  font-size: 16px;
+  padding: 60px 40px;
+  font-size: 18px;
+  color: #8899aa;
 }
 
 .error {
@@ -435,33 +459,55 @@ h3 {
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 25px;
 }
 
 .chart-box {
-  background: #f8f9fa;
-  padding: 15px;
-  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.chart-box:hover {
+  border-color: #00f2ff;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+.chart-box h3 {
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .chart-box canvas {
   width: 100% !important;
-  height: 300px !important;
+  height: 350px !important;
 }
 
 .comparison-chart {
-  background: #f8f9fa;
-  padding: 15px;
-  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.comparison-chart h3 {
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .comparison-chart canvas {
   width: 100% !important;
-  height: 400px !important;
+  height: 450px !important;
 }
 
 .summary-table {
   overflow-x: auto;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 255, 0.1);
 }
 
 .summary-table table {
@@ -471,37 +517,51 @@ h3 {
 
 .summary-table th,
 .summary-table td {
-  padding: 12px;
+  padding: 15px;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(0, 242, 255, 0.2);
 }
 
 .summary-table th {
-  background: #4dabf7;
-  color: white;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.3) 0%, rgba(0, 132, 255, 0.3) 100%);
+  color: #fff;
   font-weight: 600;
+  font-size: 15px;
 }
 
-.summary-table tr:nth-child(even) {
-  background: #f8f9fa;
+.summary-table td {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.summary-table tr {
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.3s;
+}
+
+.summary-table tr:hover {
+  background: rgba(0, 242, 255, 0.05);
 }
 
 .correlation {
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 6px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
   text-align: center;
+  border: 1px solid rgba(0, 242, 255, 0.1);
 }
 
 .correlation strong {
-  color: #4dabf7;
-  font-size: 24px;
+  color: #00f2ff;
+  font-size: 28px;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 .correlation-note {
-  margin-top: 10px;
-  color: #666;
+  margin-top: 15px;
+  color: #8899aa;
   font-style: italic;
+  font-size: 15px;
 }
 
 @media (max-width: 768px) {
@@ -510,6 +570,11 @@ h3 {
   }
 
   .comparison-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-range {
     flex-direction: column;
     align-items: stretch;
   }
