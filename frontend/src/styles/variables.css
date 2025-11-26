@@ -1,0 +1,174 @@
+/* 黄金价格分析系统 - 设计变量 */
+
+/* ================================
+   主题色彩系统
+   ================================ */
+:root {
+  /* 主要色彩 */
+  --primary-color: #00f2ff;
+  --primary-dark: #0084ff;
+  --primary-light: rgba(0, 242, 255, 0.1);
+  --primary-hover: rgba(0, 242, 255, 0.2);
+
+  /* 强调色彩 */
+  --accent-color: #ff6b6b;
+  --accent-hover: rgba(255, 107, 107, 0.2);
+
+  /* 背景层级 */
+  --bg-primary: #0a0e27;
+  --bg-secondary: #1a1f3a;
+  --bg-tertiary: #2a2f4a;
+
+  /* 玻璃拟态效果 */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.08);
+  --glass-active: rgba(255, 255, 255, 0.12);
+
+  /* 文字色彩 */
+  --text-primary: #ffffff;
+  --text-secondary: #b8c5d6;
+  --text-muted: #8899aa;
+  --text-dim: #556677;
+
+  /* 状态色彩 */
+  --success-color: #51cf66;
+  --warning-color: #ffd43b;
+  --error-color: #ff6b6b;
+  --info-color: #4dabf7;
+}
+
+/* ================================
+   间距系统
+   ================================ */
+:root {
+  --space-xs: 0.25rem;   /* 4px */
+  --space-sm: 0.5rem;    /* 8px */
+  --space-md: 0.75rem;   /* 12px */
+  --space-lg: 1rem;      /* 16px */
+  --space-xl: 1.5rem;    /* 24px */
+  --space-2xl: 2rem;     /* 32px */
+  --space-3xl: 3rem;     /* 48px */
+  --space-4xl: 4rem;     /* 64px */
+}
+
+/* ================================
+   字体系统
+   ================================ */
+:root {
+  /* 字体大小 */
+  --font-xs: 0.75rem;    /* 12px */
+  --font-sm: 0.875rem;   /* 14px */
+  --font-base: 1rem;      /* 16px */
+  --font-lg: 1.125rem;   /* 18px */
+  --font-xl: 1.25rem;    /* 20px */
+  --font-2xl: 1.5rem;    /* 24px */
+  --font-3xl: 2rem;      /* 32px */
+  --font-4xl: 2.5rem;    /* 40px */
+
+  /* 字体粗细 */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  /* 行高 */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+}
+
+/* ================================
+   圆角系统
+   ================================ */
+:root {
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+}
+
+/* ================================
+   阴影系统
+   ================================ */
+:root {
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+
+  /* 发光效果 */
+  --glow-sm: 0 0 8px rgba(0, 242, 255, 0.3);
+  --glow-md: 0 0 16px rgba(0, 242, 255, 0.4);
+  --glow-lg: 0 0 32px rgba(0, 242, 255, 0.5);
+}
+
+/* ================================
+   响应式断点
+   ================================ */
+:root {
+  --breakpoint-xs: 576px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1400px;
+}
+
+/* ================================
+   动画参数
+   ================================ */
+:root {
+  /* 缓动函数 */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 动画时长 */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* 动画延迟 */
+  --delay-none: 0ms;
+  --delay-short: 100ms;
+  --delay-normal: 300ms;
+  --delay-long: 500ms;
+}
+
+/* ================================
+   网格系统
+   ================================ */
+:root {
+  /* 容器最大宽度 */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1600px;
+
+  /* 网格列数 */
+  --grid-columns: 12;
+
+  /* 网格间距 */
+  --grid-gap: var(--space-lg);
+}
+
+/* ================================
+   Z-Index层级
+   ================================ */
+:root {
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+}

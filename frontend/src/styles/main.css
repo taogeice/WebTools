@@ -1,0 +1,323 @@
+/* 黄金价格分析系统 - 主样式文件 */
+
+/* ================================
+   导入所有样式模块
+   ================================ */
+
+/* 设计变量 */
+@import './variables.css';
+
+/* 全局样式 */
+@import './global.css';
+
+/* 组件样式 */
+@import './components/navigation.css';
+@import './components/cards.css';
+@import './components/forms.css';
+@import './components/backgrounds.css';
+
+/* ================================
+   应用程序根元素
+   ================================ */
+#app {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================================
+   主要布局区域
+   ================================ */
+.app-main {
+  flex: 1;
+  min-height: 600px;
+  margin-bottom: var(--space-2xl);
+}
+
+.app-footer {
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  padding: var(--space-2xl);
+}
+
+.footer-line {
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+}
+
+.app-footer p {
+  color: var(--text-dim);
+  font-size: var(--font-sm);
+  white-space: nowrap;
+}
+
+/* ================================
+   工具类
+   ================================ */
+
+/* 隐藏元素但保持可访问性 */
+.hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* 可见性 */
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+/* 显示控制 */
+.block { display: block; }
+.inline-block { display: inline-block; }
+.inline { display: inline; }
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+.hidden { display: none; }
+
+/* 位置 */
+.static { position: static; }
+.fixed { position: fixed; }
+.absolute { position: absolute; }
+.relative { position: relative; }
+.sticky { position: sticky; }
+
+/* 溢出处理 */
+.overflow-auto { overflow: auto; }
+.overflow-hidden { overflow: hidden; }
+.overflow-visible { overflow: visible; }
+.overflow-scroll { overflow: scroll; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-y-hidden { overflow-y: hidden; }
+
+/* 文本溢出 */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+}
+
+/* 宽高控制 */
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.w-screen { width: 100vw; }
+.h-screen { height: 100vh; }
+
+/* 最大最小宽高 */
+.max-w-xs { max-width: 20rem; }
+.max-w-sm { max-width: 24rem; }
+.max-w-md { max-width: 28rem; }
+.max-w-lg { max-width: 32rem; }
+.max-w-xl { max-width: 36rem; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-full { max-width: 100%; }
+
+.min-h-screen { min-height: 100vh; }
+.min-h-0 { min-height: 0; }
+
+/* Z-index控制 */
+.z-0 { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+.z-auto { z-index: auto; }
+
+/* ================================
+   状态颜色
+   ================================ */
+.text-success { color: var(--success-color); }
+.text-warning { color: var(--warning-color); }
+.text-error { color: var(--error-color); }
+.text-info { color: var(--info-color); }
+
+.bg-success { background-color: var(--success-color); }
+.bg-warning { background-color: var(--warning-color); }
+.bg-error { background-color: var(--error-color); }
+.bg-info { background-color: var(--info-color); }
+
+.border-success { border-color: var(--success-color); }
+.border-warning { border-color: var(--warning-color); }
+.border-error { border-color: var(--error-color); }
+.border-info { border-color: var(--info-color); }
+
+/* ================================
+   交互状态
+   ================================ */
+.opacity-0 { opacity: 0; }
+.opacity-25 { opacity: 0.25; }
+.opacity-50 { opacity: 0.5; }
+.opacity-75 { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+.select-none { user-select: none; }
+.select-text { user-select: text; }
+.select-all { user-select: all; }
+
+.pointer-events-none { pointer-events: none; }
+.pointer-events-auto { pointer-events: auto; }
+
+/* ================================
+   响应式工具类
+   ================================ */
+
+/* 显示控制 */
+@media (max-width: 575px) {
+  .hidden-mobile { display: none !important; }
+  .block-mobile { display: block !important; }
+  .flex-mobile { display: flex !important; }
+  .grid-mobile { display: grid !important; }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .hidden-sm { display: none !important; }
+  .block-sm { display: block !important; }
+  .flex-sm { display: flex !important; }
+  .grid-sm { display: grid !important; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .hidden-md { display: none !important; }
+  .block-md { display: block !important; }
+  .flex-md { display: flex !important; }
+  .grid-md { display: grid !important; }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hidden-lg { display: none !important; }
+  .block-lg { display: block !important; }
+  .flex-lg { display: flex !important; }
+  .grid-lg { display: grid !important; }
+}
+
+@media (min-width: 1200px) {
+  .hidden-xl { display: none !important; }
+  .block-xl { display: block !important; }
+  .flex-xl { display: flex !important; }
+  .grid-xl { display: grid !important; }
+}
+
+/* 文字对齐 */
+@media (max-width: 767px) {
+  .text-center-mobile { text-align: center; }
+  .text-left-mobile { text-align: left; }
+  .text-right-mobile { text-align: right; }
+}
+
+/* ================================
+   打印样式
+   ================================ */
+@media print {
+  .bg-grid,
+  .bg-glow,
+  .bg-gradient,
+  .bg-particles {
+    display: none !important;
+  }
+
+  .app-header,
+  .app-nav,
+  .app-footer {
+    display: none !important;
+  }
+
+  .card,
+  .chart-container {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ================================
+   高对比度模式
+   ================================ */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --text-muted: #ffffff;
+  }
+
+  .glass {
+    border-width: 2px;
+  }
+
+  .nav-btn,
+  .btn {
+    border-width: 2px;
+  }
+}
+
+/* ================================
+   深色模式支持（系统偏好）
+   ================================ */
+@media (prefers-color-scheme: light) {
+  /* 保持现有的深色主题，但为未来的浅色主题做准备 */
+}
+
+/* ================================
+   性能优化
+   ================================ */
+
+/* GPU加速 */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 减少重绘 */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* 内容可见性优化 */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}

@@ -1,0 +1,498 @@
+/* 黄金价格分析系统 - 表单组件样式 */
+
+/* ================================
+   基础表单元素
+   ================================ */
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--error-color);
+}
+
+.form-control {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-base);
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-normal) var(--ease-in-out);
+  min-height: 44px; /* 触摸友好 */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--glow-sm);
+  background: var(--glass-hover);
+}
+
+.form-control::placeholder {
+  color: var(--text-dim);
+}
+
+.form-control:disabled {
+  background: var(--glass-bg);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ================================
+   输入框类型
+   ================================ */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+textarea,
+select {
+  @apply form-control;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: var(--leading-normal);
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right var(--space-sm) center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: var(--space-2xl);
+}
+
+/* ================================
+   复选框和单选框
+   ================================ */
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.checkbox-wrapper,
+.radio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.checkbox-wrapper input[type="checkbox"],
+.radio-wrapper input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--primary-color);
+}
+
+.checkbox-label,
+.radio-label {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ================================
+   开关按钮
+   ================================ */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--glass-border);
+  transition: var(--duration-normal);
+  border-radius: var(--radius-full);
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  transition: var(--duration-normal);
+  border-radius: 50%;
+}
+
+.switch input:checked + .switch-slider {
+  background: var(--primary-color);
+}
+
+.switch input:checked + .switch-slider:before {
+  transform: translateX(24px);
+}
+
+/* ================================
+   按钮样式
+   ================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-xl);
+  font-size: var(--font-base);
+  font-weight: var(--font-medium);
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  min-height: 44px; /* 触摸友好 */
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 主要按钮 */
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--bg-primary);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  box-shadow: var(--glow-sm);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* 次要按钮 */
+.btn-secondary {
+  background: var(--glass-bg);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  box-shadow: var(--glow-sm);
+  transform: translateY(-1px);
+}
+
+/* 幽灵按钮 */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--glass-border);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--glass-hover);
+  color: var(--text-primary);
+  border-color: var(--primary-color);
+}
+
+/* 按钮尺寸 */
+.btn-sm {
+  padding: var(--space-xs) var(--space-md);
+  font-size: var(--font-sm);
+  min-height: 36px;
+}
+
+.btn-lg {
+  padding: var(--space-md) var(--space-2xl);
+  font-size: var(--font-lg);
+  min-height: 52px;
+}
+
+/* 按钮状态 */
+.btn-loading {
+  color: transparent;
+  position: relative;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+/* ================================
+   按钮组
+   ================================ */
+.btn-group {
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  border-right-width: 0;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  border-right-width: 1px;
+}
+
+.btn-group .btn.active {
+  background: var(--primary-color);
+  color: var(--bg-primary);
+  border-color: var(--primary-color);
+}
+
+/* ================================
+   表单布局
+   ================================ */
+.form-row {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.form-row-1 {
+  grid-template-columns: 1fr;
+}
+
+.form-row-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-row-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.form-row-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ================================
+   验证状态
+   ================================ */
+.form-control.is-valid {
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 2px rgba(81, 207, 102, 0.2);
+}
+
+.form-control.is-invalid {
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+.form-control.is-warning {
+  border-color: var(--warning-color);
+  box-shadow: 0 0 0 2px rgba(255, 212, 59, 0.2);
+}
+
+.invalid-feedback,
+.valid-feedback,
+.warning-feedback {
+  font-size: var(--font-sm);
+  margin-top: var(--space-xs);
+}
+
+.invalid-feedback {
+  color: var(--error-color);
+}
+
+.valid-feedback {
+  color: var(--success-color);
+}
+
+.warning-feedback {
+  color: var(--warning-color);
+}
+
+/* ================================
+   响应式表单
+   ================================ */
+@media (max-width: 767px) {
+  .form-row-2,
+  .form-row-3,
+  .form-row-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .btn-group .btn {
+    border-radius: var(--radius-md) !important;
+    border-right-width: 1px;
+    margin-bottom: var(--space-sm);
+  }
+
+  .btn-group .btn:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ================================
+   特殊表单组件
+   ================================ */
+
+/* 日期范围选择器 */
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.date-range .form-group {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 150px;
+}
+
+.date-separator {
+  color: var(--text-muted);
+  font-weight: var(--font-medium);
+  padding: var(--space-sm) 0;
+}
+
+/* 市场切换按钮组 */
+.market-toggle {
+  display: inline-flex;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xs);
+  gap: var(--space-xs);
+}
+
+.market-btn {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  min-height: 36px;
+}
+
+.market-btn:hover {
+  color: var(--text-primary);
+  background: var(--glass-hover);
+}
+
+.market-btn.active {
+  background: var(--primary-color);
+  color: var(--bg-primary);
+  box-shadow: var(--glow-sm);
+}
+
+/* 搜索框 */
+.search-box {
+  position: relative;
+}
+
+.search-box .form-control {
+  padding-left: var(--space-2xl);
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.search-clear {
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.search-clear:hover {
+  color: var(--text-muted);
+  background: var(--glass-hover);
+}

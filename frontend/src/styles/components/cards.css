@@ -1,0 +1,477 @@
+/* 黄金价格分析系统 - 卡片组件样式 */
+
+/* ================================
+   基础卡片
+   ================================ */
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all var(--duration-normal) var(--ease-in-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--glow-sm);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  margin-bottom: var(--space-lg);
+}
+
+.card-title {
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.card-subtitle {
+  font-size: var(--font-base);
+  color: var(--text-muted);
+  font-weight: var(--font-normal);
+}
+
+.card-content {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.card-footer {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ================================
+   价格卡片（用于LatestPrices组件）
+   ================================ */
+.price-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  text-align: center;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-in-out);
+}
+
+.price-card:hover::before {
+  opacity: 1;
+}
+
+.price-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--glow-md);
+  transform: translateY(-4px);
+}
+
+.price-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+
+.price-card .card-header h3 {
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-xs);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-full);
+  background: var(--primary-light);
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-value {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  line-height: 1;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-unit {
+  font-size: var(--font-base);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.price-date {
+  font-size: var(--font-sm);
+  color: var(--text-dim);
+}
+
+/* ================================
+   统计卡片
+   ================================ */
+.stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.stat-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--glow-sm);
+}
+
+.stat-label {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--font-medium);
+}
+
+.stat-value {
+  font-size: var(--font-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.stat-change {
+  font-size: var(--font-sm);
+  margin-top: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.stat-change.positive {
+  color: var(--success-color);
+}
+
+.stat-change.negative {
+  color: var(--error-color);
+}
+
+.stat-change.neutral {
+  color: var(--text-muted);
+}
+
+/* ================================
+   工具卡片（用于DevTools组件）
+   ================================ */
+.tool-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--primary-light), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-in-out);
+  z-index: 0;
+}
+
+.tool-card:hover::before {
+  opacity: 1;
+}
+
+.tool-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--glow-md);
+  transform: translateY(-4px);
+}
+
+.tool-icon {
+  position: relative;
+  z-index: 1;
+  margin-bottom: var(--space-lg);
+  display: flex;
+  justify-content: center;
+}
+
+.tool-card h3 {
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.tool-card p {
+  font-size: var(--font-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.tool-btn {
+  background: var(--glass-hover);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-in-out);
+  position: relative;
+  z-index: 1;
+}
+
+.tool-btn:hover {
+  background: var(--primary-color);
+  color: var(--bg-primary);
+  box-shadow: var(--glow-sm);
+}
+
+/* ================================
+   图表容器卡片
+   ================================ */
+.chart-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.chart-title {
+  font-size: var(--font-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.chart-content {
+  position: relative;
+  min-height: 400px;
+  margin-bottom: var(--space-xl);
+}
+
+.chart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+/* ================================
+   响应式卡片
+   ================================ */
+@media (max-width: 767px) {
+  .card {
+    padding: var(--space-lg);
+  }
+
+  .price-card {
+    padding: var(--space-xl);
+    margin-bottom: var(--space-lg);
+  }
+
+  .price-value {
+    font-size: var(--font-2xl);
+  }
+
+  .stat-card {
+    padding: var(--space-md);
+  }
+
+  .stat-value {
+    font-size: var(--font-xl);
+  }
+
+  .tool-card {
+    padding: var(--space-lg);
+  }
+
+  .chart-container {
+    padding: var(--space-xl);
+  }
+
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .chart-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .chart-content {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 575px) {
+  .card {
+    padding: var(--space-md);
+  }
+
+  .price-card {
+    padding: var(--space-lg);
+  }
+
+  .price-value {
+    font-size: var(--font-xl);
+  }
+
+  .chart-container {
+    padding: var(--space-lg);
+  }
+
+  .chart-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+  }
+
+  .chart-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ================================
+   卡片网格布局
+   ================================ */
+.card-grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.card-grid-1 {
+  grid-template-columns: 1fr;
+}
+
+.card-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 991px) {
+  .card-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .card-grid-3,
+  .card-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================
+   加载和错误状态卡片
+   ================================ */
+.card-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--text-muted);
+  font-size: var(--font-base);
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--glass-border);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: var(--space-sm);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.card-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--error-color);
+  font-size: var(--font-base);
+  text-align: center;
+  padding: var(--space-xl);
+}
