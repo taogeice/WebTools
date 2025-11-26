@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 环境变量
+.env
+.env.local
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.log
+tmp/
+temp/
+
+# Python 发行版
+dist/
+build/
+*.egg-info/
+
+# pytest
+.pytest_cache/
+
+# Alembic
+alembic/versions/*.py
+!alembic/versions/__init__.py
