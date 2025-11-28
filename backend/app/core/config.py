@@ -4,7 +4,6 @@
 import os
 from typing import List
 from pydantic_settings import BaseSettings
-from pydantic import field_validator
 
 
 class Settings(BaseSettings):
@@ -22,15 +21,8 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
 
-    # CORS 配置
-    BACKEND_CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://localhost:5173",  # Vite 默认端口
-        "http://localhost:8080",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:8080"
-    ]
+    # CORS 配置 - 使用字符串，在代码中解析
+    BACKEND_CORS_ORIGINS: str = "http://localhost:3000,http://localhost:5173,http://localhost:8080"
 
     # JWT 配置
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 天
@@ -40,18 +32,15 @@ class Settings(BaseSettings):
         "case_sensitive": True
     }
 
-    @field_validator("BACKEND_CORS_ORIGINS", mode="before")
-    @classmethod
-    def assemble_cors_origins(cls, v: str | List[str]) -> List[str]:
-        if isinstance(v, str):
-            # 解析逗号分隔的字符串
-            if "," in v:
-                return [i.strip() for i in v.split(",")]
-            return [i.strip() for i in v.split(",")]
-        elif isinstance(v, list):
-            return v
+    @property
+    def cors_origins(self) -> List[str]:
+        """解析 CORS origins 为列表"""
+        if isinstance(self.BACKEND_CORS_ORIGINS, str):
+            return [origin.strip() for origin in self.BACKEND_CORS_ORIGINS.split(",")]
+        elif isinstance(self.BACKEND_CORS_ORIGINS, list):
+            return self.BACKEND_CORS_ORIGINS
         else:
-            raise ValueError("CORS origins must be a string or list")
+            return ["http://localhost:3000", "http://localhost:5173", "http://localhost:8080"]
 
 
 # 创建设置实例

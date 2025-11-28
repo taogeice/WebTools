@@ -14,7 +14,7 @@ from app.models.gold_price import GoldPrice as GoldPriceModel
 router = APIRouter()
 
 
-@router.post("/sync", response_model=Dict[str, str])
+@router.post("/sync")
 async def sync_gold_price_data(
     query: DateRangeQuery,
     db: Session = Depends(get_db)

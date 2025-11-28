@@ -26,7 +26,7 @@
           @click="activeTab = tab.id"
         >
           <span class="btn-icon">{{ getTabIcon(tab.id) }}</span>
-          {{ tab.label }}
+          {{ tab.label }} (ECharts)
           <span class="btn-glow"></span>
         </button>
       </div>
@@ -34,7 +34,7 @@
 
     <main class="app-main">
       <div v-if="activeTab === 'chart'" class="tab-content">
-        <GoldPriceChart />
+        <GoldPriceChartECharts />
       </div>
 
       <div v-else-if="activeTab === 'comparison'" class="tab-content">
@@ -62,7 +62,7 @@
 
 <script>
 import { ref } from 'vue';
-import GoldPriceChart from './components/GoldPriceChart.vue';
+import GoldPriceChartECharts from './components/GoldPriceChartECharts.vue';
 import GoldPriceComparison from './components/GoldPriceComparison.vue';
 import LatestPrices from './components/LatestPrices.vue';
 import DevTools from './components/DevTools.vue';
@@ -70,7 +70,7 @@ import DevTools from './components/DevTools.vue';
 export default {
   name: 'App',
   components: {
-    GoldPriceChart,
+    GoldPriceChartECharts,
     GoldPriceComparison,
     LatestPrices,
     DevTools
@@ -79,7 +79,7 @@ export default {
     const activeTab = ref('chart');
 
     const tabs = [
-      { id: 'chart', label: '价格走势' },
+      { id: 'chart', label: '价格走势 (ECharts)' },
       { id: 'comparison', label: '市场对比' },
       { id: 'latest', label: '最新价格' },
       { id: 'devtools', label: '开发工具' }

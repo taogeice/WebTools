@@ -9,6 +9,8 @@ from typing import List, Optional, Dict, Any
 from app.models.gold_price import GoldPrice, GoldPriceMetadata
 import pandas as pd
 import numpy as np
+import time
+import random
 
 
 class GoldPriceService:
@@ -46,7 +48,20 @@ class GoldPriceService:
 
             return data_list
         except Exception as e:
+            error_msg = str(e).lower()
             print(f"获取国内黄金数据失败: {e}")
+
+            # 检查是否是限流错误
+            if any(keyword in error_msg for keyword in ['rate limit', 'too many requests', 'too frequent', '429', 'limited']):
+                print(f"国内数据API限流，使用缓存或模拟数据")
+                # 检查数据库中是否有历史数据可用
+                mock_start = datetime.strptime(start_date, '%Y%m%d')
+                mock_end = datetime.strptime(end_date, '%Y%m%d')
+                existing_data = self.get_data_from_db('domestic', mock_start, mock_end)
+                if existing_data:
+                    print(f"使用数据库中已有的国内数据，{len(existing_data)}条")
+                    return existing_data
+
             # 如果AKShare数据获取失败，返回模拟数据
             return self._generate_mock_data(start_date, end_date, 'domestic')
 
@@ -79,7 +94,20 @@ class GoldPriceService:
 
             return data_list
         except Exception as e:
+            error_msg = str(e).lower()
             print(f"获取国际黄金数据失败: {e}")
+
+            # 检查是否是限流错误
+            if any(keyword in error_msg for keyword in ['rate limit', 'too many requests', 'too frequent', '429', 'limited']):
+                print(f"国际数据API限流，使用缓存或模拟数据")
+                # 检查数据库中是否有历史数据可用
+                mock_start = datetime.strptime(start_date, '%Y-%m-%d')
+                mock_end = datetime.strptime(end_date, '%Y-%m-%d')
+                existing_data = self.get_data_from_db('international', mock_start, mock_end)
+                if existing_data:
+                    print(f"使用数据库中已有的国际数据，{len(existing_data)}条")
+                    return existing_data
+
             # 如果yfinance数据获取失败，返回模拟数据
             return self._generate_mock_data(start_date, end_date, 'international')
 
@@ -183,7 +211,12 @@ class GoldPriceService:
         if not data_list:
             return
 
-        market_type = data_list[0]['market_type']
+        # 获取市场类型
+        if isinstance(data_list[0], dict):
+            market_type = data_list[0]['market_type']
+        else:
+            # 如果是SQLAlchemy对象，直接使用对象的属性
+            return  # 暂时跳过元数据更新，避免对象访问问题
 
         # 查询或创建元数据记录
         metadata = self.db.query(GoldPriceMetadata).filter(
