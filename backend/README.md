@@ -452,75 +452,7 @@ def test_login():
 
 ## 部署
 
-### Docker 部署
-
-创建 `Dockerfile`：
-
-```dockerfile
-FROM python:3.9-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 8000
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-构建和运行：
-
-```bash
-# 构建镜像
-docker build -t webtools-backend .
-
-# 运行容器
-docker run -p 8000:8000 -e DATABASE_URL=sqlite:///./webtools.db webtools-backend
-```
-
-### 使用 Docker Compose
-
-创建 `docker-compose.yml`：
-
-```yaml
-version: '3.8'
-
-services:
-  backend:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/webtools
-    depends_on:
-      - db
-    volumes:
-      - ./app:/app/app
-
-  db:
-    image: postgres:13
-    environment:
-      - POSTGRES_DB=webtools
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  frontend:
-    build: ../frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
-volumes:
-  postgres_data:
-```
-
-### 生产环境注意事项
+### 生产环境部署
 
 1. **安全配置**：
 
@@ -555,7 +487,7 @@ volumes:
 - **代码质量**: Black, isort, flake8
 - **数据源**: AKShare, yfinance
 - **任务队列**: Celery + Redis (可选)
-- **部署**: Docker, Gunicorn, Nginx
+- **部署**: Gunicorn, Nginx
 
 ## 常见问题
 
