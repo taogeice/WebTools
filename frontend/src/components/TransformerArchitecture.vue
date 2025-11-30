@@ -78,35 +78,10 @@
                 </div>
               </div>
             </div>
-            
-            <!-- 添加注意力可视化 -->
-            <div class="attention-visualization">
-              <h4>注意力机制可视化</h4>
-              <div class="attention-grid">
-                <div class="grid-header">
-                  <div class="empty-cell"></div>
-                  <div class="header-cell">The</div>
-                  <div class="header-cell">Transformer</div>
-                  <div class="header-cell">model</div>
-                  <div class="header-cell">is</div>
-                  <div class="header-cell">powerful</div>
-                </div>
-                <div class="grid-rows">
-                  <div class="grid-row" v-for="(token, i) in ['The', 'Transformer', 'model', 'is', 'powerful']" :key="'row-' + i">
-                    <div class="header-cell">{{ token }}</div>
-                    <div class="grid-cell" v-for="j in 5" :key="'cell-' + i + '-' + j"
-                         :style="{ opacity: calculateAttention(i, j) }"
-                         :class="{ 'high-attention': calculateAttention(i, j) > 0.5 }">
-                      {{ Math.round(calculateAttention(i, j) * 100) }}%
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- ECharts可视化 -->
-              <div class="attention-chart">
-                <AttentionVisualization :attention-weights="attentionWeights" />
-              </div>
+
+            <!-- 注意力机制可视化 -->
+            <div class="attention-chart">
+              <AttentionVisualization :attention-weights="attentionWeights" />
             </div>
           </div>
         </div>
@@ -122,14 +97,39 @@
           在微调阶段，模型在特定任务上进行进一步训练。
         </p>
         <div class="training-process">
-          <div class="process-visualization">
-            <div class="data-flow">
-              <div class="data-step">1. <strong>数据输入</strong>: 大规模文本数据</div>
-              <div class="data-step">2. <strong>Token化</strong>: 文本转为数字序列</div>
-              <div class="data-step">3. <strong>位置编码</strong>: 添加位置信息</div>
-              <div class="data-step">4. <strong>模型处理</strong>: 编码器-解码器处理</div>
-              <div class="data-step">5. <strong>损失计算</strong>: 预测与实际比较</div>
-              <div class="data-step">6. <strong>参数更新</strong>: 反向传播优化</div>
+          <div class="timeline-header">
+            <h4>训练流程</h4>
+            <div class="timeline-controls">
+              <button class="control-btn" @click="startTrainingAnimation">
+                <span v-if="!isTrainingActive">▶ 播放动画</span>
+                <span v-else>⏸ 暂停</span>
+              </button>
+            </div>
+          </div>
+          <div class="timeline-container training-timeline">
+            <div class="timeline-line">
+              <div class="timeline-progress"
+                   :style="{ width: trainingProgress + '%' }"></div>
+            </div>
+            <div class="timeline-steps">
+              <div class="timeline-step"
+                   v-for="(step, index) in trainingSteps"
+                   :key="index"
+                   :class="{
+                     'active': index <= currentTrainingStep && isTrainingActive,
+                     'completed': index < currentTrainingStep
+                   }"
+                   @click="selectTrainingStep(index)">
+                <div class="step-number">{{ index + 1 }}</div>
+                <div class="step-content">
+                  <h4>{{ step.title }}</h4>
+                  <p>{{ step.desc }}</p>
+                </div>
+                <div class="step-connector">
+                  <div class="connector-line"></div>
+                  <div class="connector-arrow">➜</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -154,26 +154,39 @@
           模型会逐步生成输出token，每次生成一个token并将其作为下一步的输入。
         </p>
         <div class="inference-process">
-          <div class="process-steps">
-            <div class="step">
-              <div class="step-icon">📥</div>
-              <h4>输入编码</h4>
-              <p>输入序列通过编码器编码为表示向量</p>
+          <div class="timeline-header">
+            <h4>推理流程</h4>
+            <div class="timeline-controls">
+              <button class="control-btn" @click="startInferenceAnimation">
+                <span v-if="!isInferenceActive">▶ 播放动画</span>
+                <span v-else>⏸ 暂停</span>
+              </button>
             </div>
-            <div class="step">
-              <div class="step-icon">🔄</div>
-              <h4>自回归生成</h4>
-              <p>解码器逐步生成输出，每步预测下一个token</p>
+          </div>
+          <div class="timeline-container inference-timeline">
+            <div class="timeline-line">
+              <div class="timeline-progress"
+                   :style="{ width: inferenceProgress + '%' }"></div>
             </div>
-            <div class="step">
-              <div class="step-icon">📊</div>
-              <h4>概率计算</h4>
-              <p>计算词汇表中每个token的概率分布</p>
-            </div>
-            <div class="step">
-              <div class="step-icon">🎯</div>
-              <h4>采样策略</h4>
-              <p>使用贪婪搜索、束搜索或随机采样选择输出token</p>
+            <div class="timeline-steps">
+              <div class="timeline-step"
+                   v-for="(step, index) in inferenceSteps"
+                   :key="index"
+                   :class="{
+                     'active': index <= currentInferenceStep && isInferenceActive,
+                     'completed': index < currentInferenceStep
+                   }"
+                   @click="selectInferenceStep(index)">
+                <div class="step-icon">{{ step.icon }}</div>
+                <div class="step-content">
+                  <h4>{{ step.title }}</h4>
+                  <p>{{ step.desc }}</p>
+                </div>
+                <div class="step-connector">
+                  <div class="connector-line"></div>
+                  <div class="connector-arrow">➜</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -358,12 +371,51 @@ export default {
   data() {
     return {
       // 预定义的注意力权重用于ECharts可视化
-      attentionWeights: []
+      attentionWeights: [],
+      // 训练流程数据
+      trainingSteps: [
+        { id: 1, title: '数据输入', desc: '大规模文本数据' },
+        { id: 2, title: 'Token化', desc: '文本转为数字序列' },
+        { id: 3, title: '位置编码', desc: '添加位置信息' },
+        { id: 4, title: '模型处理', desc: '编码器-解码器处理' },
+        { id: 5, title: '损失计算', desc: '预测与实际比较' },
+        { id: 6, title: '参数更新', desc: '反向传播优化' }
+      ],
+      // 推理流程数据
+      inferenceSteps: [
+        { icon: '📥', title: '输入编码', desc: '输入序列通过编码器编码为表示向量' },
+        { icon: '🔄', title: '自回归生成', desc: '解码器逐步生成输出，每步预测下一个token' },
+        { icon: '📊', title: '概率计算', desc: '计算词汇表中每个token的概率分布' },
+        { icon: '🎯', title: '采样策略', desc: '使用贪婪搜索、束搜索或随机采样选择输出token' }
+      ],
+      // 当前训练步骤
+      currentTrainingStep: -1,
+      // 当前推理步骤
+      currentInferenceStep: -1,
+      // 训练进度百分比
+      trainingProgress: 0,
+      // 推理进度百分比
+      inferenceProgress: 0,
+      // 动画状态
+      isTrainingActive: false,
+      isInferenceActive: false,
+      // 定时器引用
+      trainingTimer: null,
+      inferenceTimer: null
     };
   },
   mounted() {
     // 生成模拟的注意力权重数据
     this.generateAttentionWeights();
+  },
+  beforeUnmount() {
+    // 清理定时器
+    if (this.trainingTimer) {
+      clearInterval(this.trainingTimer);
+    }
+    if (this.inferenceTimer) {
+      clearInterval(this.inferenceTimer);
+    }
   },
   methods: {
     // 生成ECharts需要的注意力权重数据
@@ -371,7 +423,7 @@ export default {
       const weights = [];
       const sourceTokens = ['The', 'Transformer', 'model', 'is', 'powerful'];
       const targetTokens = ['Le', 'modèle', 'Transformer', 'est', 'puissant'];
-      
+
       for (let i = 0; i < sourceTokens.length; i++) {
         for (let j = 0; j < targetTokens.length; j++) {
           // 生成模拟的注意力权重
@@ -388,17 +440,89 @@ export default {
       }
       this.attentionWeights = weights;
     },
-    
-    // 计算注意力权重的模拟方法
-    calculateAttention(row, col) {
-      // 模拟注意力权重，对角线位置值较高，表示自注意力较强
-      if (row === col) {
-        return 0.8 + Math.random() * 0.2; // 0.8-1.0
-      } else if (Math.abs(row - col) === 1) {
-        return 0.4 + Math.random() * 0.2; // 0.4-0.6
-      } else {
-        return 0.1 + Math.random() * 0.3; // 0.1-0.4
+
+    // 开始训练动画
+    startTrainingAnimation() {
+      if (this.isTrainingActive) {
+        this.pauseTrainingAnimation();
+        return;
       }
+
+      this.isTrainingActive = true;
+      this.currentTrainingStep = 0;
+      this.trainingProgress = 0;
+
+      // 清除之前的定时器
+      if (this.trainingTimer) {
+        clearInterval(this.trainingTimer);
+      }
+
+      this.trainingTimer = setInterval(() => {
+        if (this.currentTrainingStep < this.trainingSteps.length - 1) {
+          this.currentTrainingStep++;
+          this.trainingProgress = ((this.currentTrainingStep + 1) / this.trainingSteps.length) * 100;
+        } else {
+          // 动画完成
+          this.pauseTrainingAnimation();
+        }
+      }, 1500);
+    },
+
+    // 暂停训练动画
+    pauseTrainingAnimation() {
+      this.isTrainingActive = false;
+      if (this.trainingTimer) {
+        clearInterval(this.trainingTimer);
+        this.trainingTimer = null;
+      }
+    },
+
+    // 开始推理动画
+    startInferenceAnimation() {
+      if (this.isInferenceActive) {
+        this.pauseInferenceAnimation();
+        return;
+      }
+
+      this.isInferenceActive = true;
+      this.currentInferenceStep = 0;
+      this.inferenceProgress = 0;
+
+      // 清除之前的定时器
+      if (this.inferenceTimer) {
+        clearInterval(this.inferenceTimer);
+      }
+
+      this.inferenceTimer = setInterval(() => {
+        if (this.currentInferenceStep < this.inferenceSteps.length - 1) {
+          this.currentInferenceStep++;
+          this.inferenceProgress = ((this.currentInferenceStep + 1) / this.inferenceSteps.length) * 100;
+        } else {
+          // 动画完成
+          this.pauseInferenceAnimation();
+        }
+      }, 1500);
+    },
+
+    // 暂停推理动画
+    pauseInferenceAnimation() {
+      this.isInferenceActive = false;
+      if (this.inferenceTimer) {
+        clearInterval(this.inferenceTimer);
+        this.inferenceTimer = null;
+      }
+    },
+
+    // 选择训练步骤
+    selectTrainingStep(index) {
+      this.currentTrainingStep = index;
+      this.trainingProgress = ((index + 1) / this.trainingSteps.length) * 100;
+    },
+
+    // 选择推理步骤
+    selectInferenceStep(index) {
+      this.currentInferenceStep = index;
+      this.inferenceProgress = ((index + 1) / this.inferenceSteps.length) * 100;
     }
   }
 };
@@ -588,62 +712,12 @@ export default {
   border-radius: 50%;
 }
 
-/* 注意力可视化网格 */
-.attention-visualization {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(0, 242, 255, 0.2);
-}
-
-.attention-grid {
-  display: grid;
-  grid-template-columns: max-content repeat(5, 1fr);
-  gap: 2px;
-  max-width: 600px;
-  margin: 0 auto 20px;
-  background: rgba(100, 100, 100, 0.3);
-  border: 1px solid rgba(100, 150, 255, 0.4);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
 .attention-chart {
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(0, 0, 0, 0.2);
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 242, 255, 0.2);
-  border-radius: 8px;
-}
-
-.grid-header, .grid-row {
-  display: contents;
-}
-
-.header-cell {
-  padding: 10px;
-  background: rgba(0, 100, 150, 0.4);
-  border: 1px solid rgba(100, 150, 255, 0.3);
-  text-align: center;
-  font-weight: bold;
-  color: #4dabf7;
-}
-
-.empty-cell {
-  grid-column: 1 / 2;
-}
-
-.grid-cell {
-  padding: 10px;
-  border: 1px solid rgba(100, 150, 255, 0.2);
-  text-align: center;
-  background: rgba(80, 80, 120, 0.3);
-  transition: all 0.3s ease;
-}
-
-.grid-cell.high-attention {
-  background: rgba(50, 200, 100, 0.6);
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(50, 200, 100, 0.7);
+  border-radius: 12px;
 }
 
 .training-process, .inference-process {
@@ -684,6 +758,229 @@ export default {
 
 .training-details li, .inference-details li {
   margin-bottom: 10px;
+}
+
+/* 时间线样式 */
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+}
+
+.timeline-header h4 {
+  color: #00f2ff;
+  font-size: 20px;
+  margin: 0;
+}
+
+.timeline-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  padding: 8px 16px;
+  background: rgba(0, 150, 255, 0.3);
+  border: 1px solid rgba(0, 150, 255, 0.5);
+  border-radius: 6px;
+  color: #00f2ff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  background: rgba(0, 150, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.timeline-container {
+  position: relative;
+  padding: 40px 0;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(0, 242, 255, 0.3), rgba(0, 242, 255, 0.6));
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00f2ff, #00ff88);
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.8);
+}
+
+.timeline-steps {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  padding: 0 5%;
+}
+
+.timeline-step {
+  flex: 1;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-width: 180px;
+}
+
+.timeline-step:hover {
+  transform: translateY(-5px);
+}
+
+.timeline-step.active .step-number {
+  background: linear-gradient(135deg, #00f2ff, #00ff88);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.8);
+  animation: stepPulse 2s infinite;
+}
+
+.timeline-step.completed .step-number {
+  background: linear-gradient(135deg, #00ff88, #00cc66);
+}
+
+.timeline-step.completed .step-content h4 {
+  color: #00ff88;
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  background: rgba(0, 100, 150, 0.4);
+  border: 2px solid rgba(0, 150, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #00f2ff;
+  transition: all 0.3s ease;
+}
+
+.step-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  transition: all 0.3s ease;
+}
+
+.timeline-step.active .step-icon {
+  animation: stepPulse 2s infinite;
+}
+
+.step-content {
+  background: rgba(0, 30, 60, 0.5);
+  border: 1px solid rgba(0, 150, 255, 0.3);
+  border-radius: 8px;
+  padding: 15px 10px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.timeline-step:hover .step-content {
+  border-color: rgba(0, 242, 255, 0.6);
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.4);
+}
+
+.step-content h4 {
+  color: #4dabf7;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.step-content p {
+  margin: 0;
+  font-size: 13px;
+  color: #b0c4de;
+  line-height: 1.5;
+}
+
+.step-connector {
+  position: absolute;
+  top: 25px;
+  left: 100%;
+  width: 100%;
+  height: 4px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.connector-line {
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.8), transparent);
+  animation: dataFlow 2s infinite;
+}
+
+.connector-arrow {
+  color: #00f2ff;
+  font-size: 20px;
+  margin-left: 5px;
+  animation: arrowMove 1s infinite;
+}
+
+.timeline-step:last-child .step-connector {
+  display: none;
+}
+
+/* 动画效果 */
+@keyframes dataFlow {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes stepPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 242, 255, 0.9);
+  }
+}
+
+@keyframes arrowMove {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
 }
 
 .process-steps {
@@ -768,22 +1065,80 @@ pre {
     min-width: auto;
     gap: 30px;
   }
-  
+
   .transformer-container {
     padding: 15px;
   }
-  
+
   .transformer-title {
     font-size: 28px;
   }
-  
+
   .process-steps, .inference-steps, .component-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .attention-grid {
     max-width: 100%;
     overflow-x: auto;
+  }
+
+  .timeline-steps {
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+
+  .timeline-step {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .timeline-container {
+    padding: 30px 0;
+  }
+
+  .timeline-line {
+    left: 10%;
+    right: 10%;
+  }
+
+  .timeline-steps {
+    padding: 0 10%;
+  }
+
+  .timeline-step {
+    min-width: 130px;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+
+  .step-content {
+    padding: 12px 8px;
+  }
+
+  .step-content h4 {
+    font-size: 14px;
+  }
+
+  .step-content p {
+    font-size: 12px;
   }
 }
 </style>
