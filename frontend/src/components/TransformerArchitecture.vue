@@ -78,6 +78,36 @@
                 </div>
               </div>
             </div>
+            
+            <!-- 添加注意力可视化 -->
+            <div class="attention-visualization">
+              <h4>注意力机制可视化</h4>
+              <div class="attention-grid">
+                <div class="grid-header">
+                  <div class="empty-cell"></div>
+                  <div class="header-cell">The</div>
+                  <div class="header-cell">Transformer</div>
+                  <div class="header-cell">model</div>
+                  <div class="header-cell">is</div>
+                  <div class="header-cell">powerful</div>
+                </div>
+                <div class="grid-rows">
+                  <div class="grid-row" v-for="(token, i) in ['The', 'Transformer', 'model', 'is', 'powerful']" :key="'row-' + i">
+                    <div class="header-cell">{{ token }}</div>
+                    <div class="grid-cell" v-for="j in 5" :key="'cell-' + i + '-' + j"
+                         :style="{ opacity: calculateAttention(i, j) }"
+                         :class="{ 'high-attention': calculateAttention(i, j) > 0.5 }">
+                      {{ Math.round(calculateAttention(i, j) * 100) }}%
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- ECharts可视化 -->
+              <div class="attention-chart">
+                <AttentionVisualization :attention-weights="attentionWeights" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -318,15 +348,58 @@
 </template>
 
 <script>
+import AttentionVisualization from './AttentionVisualization.vue';
+
 export default {
   name: 'TransformerArchitecture',
+  components: {
+    AttentionVisualization
+  },
   data() {
     return {
-      // 组件数据
+      // 预定义的注意力权重用于ECharts可视化
+      attentionWeights: []
     };
   },
+  mounted() {
+    // 生成模拟的注意力权重数据
+    this.generateAttentionWeights();
+  },
   methods: {
-    // 组件方法
+    // 生成ECharts需要的注意力权重数据
+    generateAttentionWeights() {
+      const weights = [];
+      const sourceTokens = ['The', 'Transformer', 'model', 'is', 'powerful'];
+      const targetTokens = ['Le', 'modèle', 'Transformer', 'est', 'puissant'];
+      
+      for (let i = 0; i < sourceTokens.length; i++) {
+        for (let j = 0; j < targetTokens.length; j++) {
+          // 生成模拟的注意力权重
+          let weight;
+          if (i === j) {
+            weight = 0.7 + Math.random() * 0.3; // 对角线位置权重较高
+          } else if (Math.abs(i - j) === 1) {
+            weight = 0.3 + Math.random() * 0.4; // 邻近位置权重中等
+          } else {
+            weight = Math.random() * 0.3; // 其他位置权重较低
+          }
+          weights.push([i, j, parseFloat(weight.toFixed(3))]);
+        }
+      }
+      this.attentionWeights = weights;
+    },
+    
+    // 计算注意力权重的模拟方法
+    calculateAttention(row, col) {
+      // 模拟注意力权重，对角线位置值较高，表示自注意力较强
+      if (row === col) {
+        return 0.8 + Math.random() * 0.2; // 0.8-1.0
+      } else if (Math.abs(row - col) === 1) {
+        return 0.4 + Math.random() * 0.2; // 0.4-0.6
+      } else {
+        return 0.1 + Math.random() * 0.3; // 0.1-0.4
+      }
+    }
   }
 };
 </script>
@@ -396,80 +469,246 @@ export default {
   overflow-x: auto;
 }
 
-.encoder-decoder {
+.transformer-flow {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 20px;
-  min-width: 800px;
+  min-width: 1000px;
 }
 
-.encoder, .decoder {
-  flex: 1;
+.input-section, .output-section {
+  text-align: center;
   padding: 15px;
-  border: 1px solid rgba(0, 242, 255, 0.3);
+  background: rgba(0, 60, 120, 0.4);
+  border: 1px solid rgba(0, 150, 255, 0.4);
   border-radius: 8px;
-  background: rgba(0, 30, 60, 0.4);
+  min-width: 150px;
 }
 
-.encoder h5, .decoder h5 {
+.input-tokens, .output-tokens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.token {
+  padding: 8px;
+  background: rgba(100, 150, 255, 0.3);
+  border: 1px solid rgba(100, 150, 255, 0.5);
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.input-label, .output-label {
+  font-size: 14px;
+  color: #4dabf7;
+}
+
+.encoder-stack, .decoder-stack {
+  flex: 1;
+  min-width: 200px;
+}
+
+.encoder-header, .decoder-header {
   text-align: center;
   color: #51cf66;
   margin-bottom: 15px;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.blocks {
+.encoder-blocks, .decoder-blocks {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.block {
-  padding: 12px;
-  border: 1px solid rgba(100, 200, 255, 0.3);
-  border-radius: 6px;
+.encoder-block, .decoder-block {
+  padding: 15px;
   background: rgba(0, 40, 80, 0.4);
+  border: 1px solid rgba(0, 120, 200, 0.4);
+  border-radius: 8px;
 }
 
-.block-label {
-  display: block;
+.block-title {
   text-align: center;
-  font-weight: bold;
   color: #ffd43b;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.layer-name {
+  text-align: center;
+  font-size: 14px;
+  color: #ff6b6b;
   margin-bottom: 8px;
 }
 
-.sublayers {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.attention-layer,
+.masked-attention-layer,
+.cross-attention-layer,
+.ffn-layer {
+  margin-bottom: 10px;
+  padding: 8px;
+  background: rgba(80, 0, 120, 0.3);
+  border: 1px solid rgba(120, 0, 200, 0.4);
+  border-radius: 4px;
 }
 
-.sublayer {
-  padding: 6px;
-  background: rgba(100, 150, 255, 0.2);
+.attention-connections {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 2px;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.conn-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(100, 100, 100, 0.3);
+  border: 1px solid rgba(150, 150, 150, 0.3);
+  transition: all 0.3s ease;
+}
+
+.conn-cell.active {
+  background: rgba(50, 200, 100, 0.5);
+  box-shadow: 0 0 5px rgba(50, 200, 100, 0.7);
+}
+
+.conn-dot {
+  width: 6px;
+  height: 6px;
+  background: #00f2ff;
+  border-radius: 50%;
+}
+
+/* 注意力可视化网格 */
+.attention-visualization {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 242, 255, 0.2);
+}
+
+.attention-grid {
+  display: grid;
+  grid-template-columns: max-content repeat(5, 1fr);
+  gap: 2px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  background: rgba(100, 100, 100, 0.3);
   border: 1px solid rgba(100, 150, 255, 0.4);
   border-radius: 4px;
-  text-align: center;
-  font-size: 14px;
+  overflow: hidden;
 }
 
-.process-steps, .inference-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+.attention-chart {
   margin-top: 20px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  border-radius: 8px;
+}
+
+.grid-header, .grid-row {
+  display: contents;
+}
+
+.header-cell {
+  padding: 10px;
+  background: rgba(0, 100, 150, 0.4);
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  text-align: center;
+  font-weight: bold;
+  color: #4dabf7;
+}
+
+.empty-cell {
+  grid-column: 1 / 2;
+}
+
+.grid-cell {
+  padding: 10px;
+  border: 1px solid rgba(100, 150, 255, 0.2);
+  text-align: center;
+  background: rgba(80, 80, 120, 0.3);
+  transition: all 0.3s ease;
+}
+
+.grid-cell.high-attention {
+  background: rgba(50, 200, 100, 0.6);
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(50, 200, 100, 0.7);
+}
+
+.training-process, .inference-process {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(0, 30, 60, 0.3);
+  border-radius: 8px;
+}
+
+.process-visualization {
+  padding: 15px;
+  background: rgba(0, 40, 80, 0.4);
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.data-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.data-step {
+  padding: 10px;
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  border-radius: 4px;
+  text-align: left;
+}
+
+.training-details, .inference-details {
+  margin-top: 15px;
+}
+
+.training-details ul, .inference-details ul {
+  padding-left: 20px;
+}
+
+.training-details li, .inference-details li {
+  margin-bottom: 10px;
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
 }
 
 .step {
-  padding: 20px;
+  padding: 15px;
   background: rgba(0, 40, 80, 0.3);
   border: 1px solid rgba(0, 150, 200, 0.3);
   border-radius: 8px;
+  text-align: center;
+}
+
+.step-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
 .step h4 {
   color: #4dabf7;
-  margin-bottom: 10px;
+  margin: 10px 0 5px 0;
   font-size: 18px;
 }
 
@@ -492,7 +731,7 @@ export default {
   font-size: 18px;
 }
 
-.code-blocks {
+.code-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -523,7 +762,13 @@ pre {
   line-height: 1.5;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
+  .transformer-flow {
+    flex-direction: column;
+    min-width: auto;
+    gap: 30px;
+  }
+  
   .transformer-container {
     padding: 15px;
   }
@@ -532,13 +777,13 @@ pre {
     font-size: 28px;
   }
   
-  .encoder-decoder {
-    flex-direction: column;
-    min-width: auto;
-  }
-  
   .process-steps, .inference-steps, .component-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .attention-grid {
+    max-width: 100%;
+    overflow-x: auto;
   }
 }
 </style>
