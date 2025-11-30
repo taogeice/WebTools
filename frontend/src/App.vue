@@ -26,7 +26,7 @@
           @click="activeTab = tab.id"
         >
           <span class="btn-icon">{{ getTabIcon(tab.id) }}</span>
-          {{ tab.label }} (ECharts)
+          {{ tab.label }}
           <span class="btn-glow"></span>
         </button>
       </div>
@@ -48,6 +48,10 @@
       <div v-else-if="activeTab === 'devtools'" class="tab-content">
         <DevTools />
       </div>
+
+      <div v-else-if="activeTab === 'transformer'" class="tab-content">
+        <TransformerArchitecture />
+      </div>
     </main>
 
     <footer class="app-footer">
@@ -66,6 +70,7 @@ import GoldPriceChartECharts from './components/GoldPriceChartECharts.vue';
 import GoldPriceComparison from './components/GoldPriceComparison.vue';
 import LatestPrices from './components/LatestPrices.vue';
 import DevTools from './components/DevTools.vue';
+import TransformerArchitecture from './components/TransformerArchitecture.vue';
 
 export default {
   name: 'App',
@@ -73,7 +78,8 @@ export default {
     GoldPriceChartECharts,
     GoldPriceComparison,
     LatestPrices,
-    DevTools
+    DevTools,
+    TransformerArchitecture
   },
   setup() {
     const activeTab = ref('chart');
@@ -82,7 +88,8 @@ export default {
       { id: 'chart', label: '价格走势 (ECharts)' },
       { id: 'comparison', label: '市场对比' },
       { id: 'latest', label: '最新价格' },
-      { id: 'devtools', label: '开发工具' }
+      { id: 'devtools', label: '开发工具' },
+      { id: 'transformer', label: 'Transformer架构' }
     ];
 
     const getTabIcon = (tabId) => {
@@ -90,7 +97,8 @@ export default {
         chart: '📊',
         comparison: '📈',
         latest: '⚡',
-        devtools: '🔧'
+        devtools: '🔧',
+        transformer: '🧠'
       };
       return icons[tabId] || '•';
     };
